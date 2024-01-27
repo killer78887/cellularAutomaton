@@ -6,10 +6,10 @@ const colorSlider = document.getElementById("fillColor")
 const sliderLabel = document.getElementById("sliderLabel")
 
 const fillColor = ["black","white","darkred","darkgreen","indigo","orange"];
-const pixelSize = 20;
+const pixelSize = 5;
 const rowPixel = canvas.width/pixelSize;
 const columnPixel = canvas.height/pixelSize;
-const updateDelay = 500; //in ms
+const updateDelay = 10; //in ms
 
 let pixel = new Array(columnPixel);
 let lastTime = 0;
@@ -49,8 +49,29 @@ function putPixel(event) {
 }
 
 function update() {
-    //simulation rules here
-    console.log('y');
+    tempPixel = pixel.map(row => row.slice());
+    for (var i = 0; i < columnPixel-1; i++) {
+        for (var j = 0; j < rowPixel; j++) {
+            if(pixel[i][j]>0){
+                //move one down
+                if(pixel[i+1][j]==0){
+                    tempPixel[i+1][j] =  tempPixel[i][j];
+                    tempPixel[i][j] = 0;
+                }
+                else{
+                    if(j>0&&pixel[i+1][j-1]==0){
+                        tempPixel[i+1][j-1] =  tempPixel[i][j];
+                        tempPixel[i][j] = 0;
+                    }
+                    if(j<rowPixel-1&&pixel[i+1][j+1]==0){
+                        tempPixel[i+1][j+1] =  tempPixel[i][j];
+                        tempPixel[i][j] = 0;
+                    }
+                }
+            }
+        }
+    }
+    pixel = tempPixel.map(row => row.slice());
 }
 
 function render(){
@@ -67,14 +88,8 @@ function render(){
     }
     for (var i = 0; i < columnPixel; i++) {
         for (var j = 0; j < rowPixel; j++) {
-            if(pixel[i][j]==0){
-                ctx.strokeStyle = "white";
-                ctx.strokeRect(j*pixelSize,i*pixelSize,pixelSize,pixelSize);
-            }
-            else{
-                ctx.fillStyle = fillColor[pixel[i][j]];
-                ctx.fillRect(j*pixelSize,i*pixelSize,pixelSize,pixelSize);
-            }
+            ctx.fillStyle = fillColor[pixel[i][j]];
+            ctx.fillRect(j*pixelSize,i*pixelSize,pixelSize,pixelSize);
         }
     }
     //console.log(updateCheckbox.checked);

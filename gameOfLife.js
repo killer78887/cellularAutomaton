@@ -50,7 +50,7 @@ function putPixel(event) {
 function update() {
     //simulation rules here
     let tempPixel = pixel.map(row => row.slice());
-    for (var i = 1; i < columnPixel-1; i++) {
+    for (var i = 1; i < columnPixel-1-1; i++) {
         for (var j = 1; j < rowPixel-1; j++) {
             let liveNeighbour = 0
             liveNeighbour =
