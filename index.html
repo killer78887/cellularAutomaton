@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    <script src="main.js"></script>
+<body style="background-color: black">
+    <canvas width="500" height="500" id="mycanvas"></canvas>
+    <aside>
+        <p>Touch on board to place pixels</p>
+    <input type="checkbox" id="updateBool" name="updateBool">
+    <label for="updateBool">pause/play</label><br><br>
+    <input type="button" id="updateOnce" value="update once"><br><br>
+    <input type="range" min="0" max="5" value="1" id="fillColor">
+    <label for="fillcolor" id="sliderLabel">white</label>
+    </aside>
+    <script defer src="gameOfLife.js"></script>
+    
 </body>
 </html>
